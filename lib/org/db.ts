@@ -5,11 +5,11 @@
  */
 
 import type Database from 'better-sqlite3'
-import { getDb } from '@/lib/db'  // MC's existing DB accessor
+import { getDatabase } from '@/lib/db'  // MC's existing DB accessor
 
 // Re-export the MC db instance; org tables live in the same DB file (org.* prefix)
 export function getOrgDb(): Database.Database {
-  return getDb()
+  return getDatabase()
 }
 
 // ─── Companies ───────────────────────────────────────────────────────────────

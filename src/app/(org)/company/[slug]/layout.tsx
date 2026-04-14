@@ -14,22 +14,23 @@ const TABS = [
   { value: 'contacts', label: 'Contacts', href: 'contacts' },
 ]
 
-export default function CompanyLayout({
+export default async function CompanyLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }) {
+  const { slug } = await params
   return (
     <div className="flex flex-col h-full">
       <header className="border-b border-border px-6 py-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold capitalize">{params.slug.replace(/-/g, ' ')}</h1>
+          <h1 className="text-xl font-semibold capitalize">{slug.replace(/-/g, ' ')}</h1>
           <Tabs defaultValue="overview" className="mr-8">
             <TabsList>
               {TABS.map((tab) => (
-                <Link key={tab.value} href={`/company/${params.slug}/${tab.href}`} className="contents">
+                <Link key={tab.value} href={`/company/${slug}/${tab.href}`} className="contents">
                   <TabsTrigger value={tab.value}>{tab.label}</TabsTrigger>
                 </Link>
               ))}

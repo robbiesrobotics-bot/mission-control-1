@@ -9,7 +9,7 @@ import Stripe from 'stripe'
 import { upsertStripeEvent, markStripeEventProcessed } from './db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-02-24.acacia',
+  apiVersion: '2026-03-25.dahlia',
 })
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
@@ -30,9 +30,10 @@ export async function handleStripeWebhook(req: NextRequest): Promise<NextRespons
 
   // Idempotent processing — check if already handled
   try {
+    const amount = (event.data.object as unknown as Record<string, unknown>).amount as number | undefined
     upsertStripeEvent({
       stripeEventId: event.id,
-      amount: event.data.object.amount ? (event.data.object.amount as number) / 100 : undefined,
+      amount: amount ? amount / 100 : undefined,
       type: event.type,
     })
   } catch {

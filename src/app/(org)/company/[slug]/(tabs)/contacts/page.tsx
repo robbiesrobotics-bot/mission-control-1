@@ -1,17 +1,19 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { use } from 'react'
 import { ContactCard } from '@/components/org/crm/contact-card'
 import type { Contact } from '@/lib/org/db'
 
-export default function ContactsPage({ params }: { params: { slug: string } }) {
+export default function ContactsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params)
   const [contacts, setContacts] = useState<Contact[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchContacts = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch(`/api/org/companies/${params.slug}/contacts`)
+      const res = await fetch(`/api/org/companies/${slug}/contacts`)
       if (res.ok) {
         const data = await res.json()
         setContacts(data.contacts ?? [])
@@ -20,7 +22,7 @@ export default function ContactsPage({ params }: { params: { slug: string } }) {
       // silent
     }
     setLoading(false)
-  }, [params.slug])
+  }, [slug])
 
   useEffect(() => { fetchContacts() }, [fetchContacts])
 

@@ -165,7 +165,7 @@ export async function GET() {
       status: fluxMacMini.status,
       lastSeen: timestamp,
       role: 'Flux Image Gen + Ollama',
-      loadedModels: ollamaMacMiniDirect.models,
+      loadedModels: (ollamaMacMiniDirect as unknown as HealthCheckResult).models,
     },
     {
       name: 'Mac Studio',
@@ -174,7 +174,7 @@ export async function GET() {
       status: ltxMacStudio.status,
       lastSeen: timestamp,
       role: 'LTX Video + Music + Ollama',
-      loadedModels: ollamaMacStudio.models,
+      loadedModels: (ollamaMacStudio as unknown as HealthCheckResult).models,
     },
     {
       name: 'Ubuntu Desktop',
@@ -191,7 +191,7 @@ export async function GET() {
       status: ollamaMacBookAir.status,
       lastSeen: timestamp,
       role: 'Ollama (lightweight)',
-      loadedModels: ollamaMacBookAir.models,
+      loadedModels: (ollamaMacBookAir as unknown as HealthCheckResult).models,
     },
     {
       name: 'Jetson AGX Orin',
@@ -200,7 +200,7 @@ export async function GET() {
       status: aceStepAGX.status,
       lastSeen: timestamp,
       role: 'ACE-Step Music + Ollama',
-      loadedModels: ollamaAGX.models,
+      loadedModels: (ollamaAGX as unknown as HealthCheckResult).models,
     },
   ]
 

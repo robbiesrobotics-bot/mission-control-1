@@ -6,7 +6,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import type { Db } from './db'
 
 const JWT_SECRET = process.env.AUTH_JWT_SECRET || ''
 const JWT_ALGORITHM = 'HS256'

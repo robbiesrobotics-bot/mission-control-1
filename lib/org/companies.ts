@@ -35,7 +35,7 @@ export function listCompanies(): CompanySummary[] {
       name: c.name,
       slug: c.slug,
       owner_count: owners.length,
-      total_ownership: owners.reduce((s, o) => s + o.ownership_pct, 0),
+      total_ownership: owners.reduce((s: number, o: { ownership_pct: number }) => s + o.ownership_pct, 0),
     }
   })
 }

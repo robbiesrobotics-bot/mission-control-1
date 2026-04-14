@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { use } from 'react'
 import { DealKanban } from '@/components/org/crm/deal-kanban'
 import { AddDealModal } from '@/components/org/crm/add-deal-modal'
 import type { Deal } from '@/lib/org/db'
 
-export default function DealsPage({ params }: { params: { slug: string } }) {
+export default function DealsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params)
   const [deals, setDeals] = useState<Deal[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddModal, setShowAddModal] = useState(false)
@@ -13,7 +15,7 @@ export default function DealsPage({ params }: { params: { slug: string } }) {
   const fetchDeals = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch(`/api/org/companies/${params.slug}/deals`)
+      const res = await fetch(`/api/org/companies/${slug}/deals`)
       if (res.ok) {
         const data = await res.json()
         setDeals(data.deals ?? [])
@@ -22,7 +24,7 @@ export default function DealsPage({ params }: { params: { slug: string } }) {
       // silent
     }
     setLoading(false)
-  }, [params.slug])
+  }, [slug])
 
   useEffect(() => { fetchDeals() }, [fetchDeals])
 
@@ -50,10 +52,10 @@ export default function DealsPage({ params }: { params: { slug: string } }) {
           + Add Deal
         </button>
       </div>
-      <DealKanban companySlug={params.slug} deals={deals} />
+      <DealKanban companySlug={slug} deals={deals} />
       {showAddModal && (
         <AddDealModal
-          companySlug={params.slug}
+          companySlug={slug}
           onClose={() => setShowAddModal(false)}
           onSuccess={() => { setShowAddModal(false); fetchDeals() }}
         />
