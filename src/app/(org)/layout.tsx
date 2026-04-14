@@ -1,19 +1,12 @@
-/**
- * src/app/(org)/layout.tsx
- * Root layout for the org dashboard route group.
- * Does NOT extend the MC root layout — fully isolated.
- */
+import { OrgSidebar } from '@/components/org/layout/sidebar'
 
-import '../../globals.css'
-
-export default function OrgLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function OrgLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {children}
+    <div className="flex h-full overflow-hidden bg-background">
+      <OrgSidebar />
+      <main className="flex-1 overflow-auto">
+        {children}
+      </main>
     </div>
   )
 }
