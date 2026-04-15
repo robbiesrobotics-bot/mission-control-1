@@ -8,7 +8,7 @@ services:
       - PORT=${PORT:-3000}
       - NODE_ENV=production
       - MC_ALLOWED_HOSTS=${MC_ALLOWED_HOSTS:-*}
-      - MC_COOKIE_SECURE=${MC_COOKIE_SECURE:-0}
+      - MC_COOKIE_SECURE=1
       - MC_ENABLE_HSTS=0
       - AUTH_JWT_SECRET=${AUTH_JWT_SECRET:-}
       - DATABASE_URL=${DATABASE_URL:-}
