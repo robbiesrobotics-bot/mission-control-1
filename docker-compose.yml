@@ -10,35 +10,18 @@ services:
       - MC_ALLOWED_HOSTS=${MC_ALLOWED_HOSTS:-*}
       - MC_COOKIE_SECURE=${MC_COOKIE_SECURE:-0}
       - MC_ENABLE_HSTS=0
-      - AUTH_JWT_SECRET=${AUTH_JWT_SECRET}
+      - AUTH_JWT_SECRET=${AUTH_JWT_SECRET:-}
       - DATABASE_URL=${DATABASE_URL:-}
       - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL:-}
       - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY:-}
       - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
-      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
-    env_file:
-      - path: .env
-        required: false
-      - path: .env.local
-        required: false
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://alice.av3.ai}
     volumes:
       - mc-data:/app/.data
     networks:
       - mc-net
     restart: unless-stopped
-    depends_on:
-      - cloudflared
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    container_name: mission-control-tunnel
-    command: tunnel run --token ${CLOUDFLARED_TOKEN}
-    restart: unless-stopped
-    networks:
-      - mc-net
-    depends_on:
-      - mission-control
 
 volumes:
   mc-data:
